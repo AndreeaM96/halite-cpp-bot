@@ -1,0 +1,65 @@
+Echipa Graph d3stroy3r$ :
+
+Neciu Laurentiu-Florin 321CC
+Digori Gheorge 321CC
+Mirescu Andreea Alexandra 323CC
+Dumitru Diana 325CC
+
+Mediu de dezvoltare: Limbajul C++ 11
+Modalitate de compilare: "make" sau "make build" sau "make all" in fisierul
+radacina al arhivei.
+
+Descriere mod de lucru : Initial am organizat un brain- storming toti membri
+echipei incercand sa indentificam solutii posibile de rezolvare,
+pe parcurs fiecare membru a venit cu idei de optimizare.
+
+Surse de inspiratie: ghidurile de pe forumul halite.io;
+
+Update :: In etapa 3 am adaugat o strutura  Inamic (care reprezinta de fapt
+o frontiera de celule inamice) in care stocam id-ul primei celule inamic cu
+care intram in contact, un centru (locatia in joc a acestei celule), un
+numar care contabilizeaza cate celule intra in frontiera respectiva si o
+putere care este suma puterilor tuturor celulelor care intra in frontiera.
+
+Acea structura o folosim la compunerea unor
+frontiere care ne ajuta la verificarea gasirii zonei vulnerabile a
+inamicului, pe care sa atacam.
+De asemenea am aplicat un calcul de maxim dupa o euristica
+care este facuta in functie de teritoriul inamicului, de slabiciunea frontierei
+in care intra celula inamica, de distanta fata de celula sursa.
+
+Update :: In etapa 2 am adaugat inca o functie look_for_enemy
+care pur si simplu verifica care loc duce la o dauna maximala
+inamicului.
+
+Functia look_for_enemy are complexitate O(1).
+
+De asemenea se calculeaza un factor de maturitate _omega
+care inmultit cu productia da puterea necesara a unei celule
+pentru a se deplasa in joc.
+Acesta este calculat in functie de dimensiunea mapei, cu cat
+mapa este mai mare cu atat jucatorul intra in contact mai greu
+cu inamicul si poate sa astepte mai mult pentru a-si fortifica
+piesele centrale.
+
+Structura si abordare algoritmica a proiectului:
+	- clasa Vecini care contine informatii despre un punct si distanta
+  	  lui relativa la un alt punct numit origine, directia
+	  optima aleasa printr-o cautare limitata pe 4 directii (N S E V) cu o
+  	  euristica care ia in calcul distanta unui vecin strain fata de
+	  origine, productia lui si puterea lui curenta.
+	- cea mai importanta abordare algoritmica este un algoritm prin care
+	  sunt separate si prelucrate doua clase de celule:
+	  	- celule de la margine care decid daca este cazul sa atace
+  	  	  (si daca este prezenta o lista de 2 sau mai multe
+		  posibilitati de celule va alege pe cea cu euristica
+		  cea mai mare)
+		- celule de la interior care decid bazandu-se pe un algoritm de
+		  cautare - catre cele mai apropiate celule straine
+		  (nord sud est vest) pe o raza limitata - care este directia
+		  optima (bazandu-se tot pe o euristica in care se ia in calcul
+		  si distanta).
+
+
+Complexitate:
+	O(n) unde n = max(width, height) pe celula jucatorului
